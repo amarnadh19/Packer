@@ -1,0 +1,46 @@
+{
+  "builders": [{
+    "type": "azure-arm",
+
+   "client_id": "b549559a-469c-4636-9a5a-fca7c14c7fa9",
+    "client_secret": "ced0992e-74c1-41ac-b19a-5df67e300404",
+    "tenant_id": "00864b60-6615-48a0-b1da-667795698405",
+    "subscription_id": "2e48bf6b-7ea9-4244-921a-eabbc46319a7", 
+
+    "managed_image_resource_group_name": "jfrog",
+    "managed_image_name": "jfrogPackerImage",
+
+    "os_type": "Linux",
+    "image_publisher": "RedHat",
+    "image_offer": "RHEL",
+    "image_sku": "7.7",
+
+    "azure_tags": {
+        "dept": "Engineering",
+        "task": "Image deployment"
+    },
+
+    "location": "japan west",
+    "vm_size": "Standard_DS2_v2"
+  }],
+
+   "provisioners": [
+    {
+      "type": "file",
+      "source": "bootstrap_docker_ce.sh",
+      "destination": "/tmp/bootstrap_docker_ce.sh"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "whoami",
+        "cd /tmp",
+        "sudo chown root:root bootstrap_docker_ce.sh",
+        "sudo chmod +x bootstrap_docker_ce.sh",
+        "sudo ls -alh /tmp",
+        "sudo sh /tmp/bootstrap_docker_ce.sh",
+        "sleep 100"
+      ]
+    }
+  ]
+}
