@@ -2,10 +2,10 @@
   "builders": [{
     "type": "azure-arm",
 
-   "client_id": "b549559a-469c-4636-9a5a-fca7c14c7fa9",
-    "client_secret": "ced0992e-74c1-41ac-b19a-5df67e300404",
-    "tenant_id": "00864b60-6615-48a0-b1da-667795698405",
-    "subscription_id": "2e48bf6b-7ea9-4244-921a-eabbc46319a7", 
+   "client_id": " ",
+    "client_secret": " ",
+    "tenant_id": " ",
+    "subscription_id": " ", 
 
     "managed_image_resource_group_name": "jfrog",
     "managed_image_name": "jfrogPackerImage",
