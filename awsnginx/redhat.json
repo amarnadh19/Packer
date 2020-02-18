@@ -1,0 +1,54 @@
+{
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": "",
+    "name": "aws-docker-ce-base",
+    "us_east_1_name": "centos-docker-ce-base",
+    "ssh_username": "ubuntu"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "ap-south-1",
+    "source_ami_filter": {
+      "filters": {
+        "virtualization-type": "hvm",
+        "name": "CentOS Linux 7 x86_64 HVM EBS *",
+        "root-device-type": "ebs"
+      },
+      "owners": ["679593333241"],
+      "most_recent": true
+    },
+    "instance_type": "t2.micro",
+    "ssh_username": "centos",
+    "ami_name": "packer-example {{timestamp}}"
+  }],
+  
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "bootstrap_docker_ce.sh",
+      "destination": "/tmp/bootstrap_docker_ce.sh"
+    },
+    {
+      "type": "file",
+      "source": "cleanup.sh",
+      "destination": "/tmp/cleanup.sh"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "whoami",
+        "cd /tmp",
+        "sudo chown root:root bootstrap_docker_ce.sh",
+        "sudo chmod +x bootstrap_docker_ce.sh",
+        "sudo ls -alh /tmp",
+        "sudo sh /tmp/bootstrap_docker_ce.sh",
+        "sleep 100",
+        "sudo sh /tmp/cleanup.sh"
+        
+      ]
+    }
+  ]
+}
